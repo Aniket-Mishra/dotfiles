@@ -94,3 +94,5 @@ if command -v axel &> /dev/null; then
 else
   alias fastget='curl -O'
 fi
+
+alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
