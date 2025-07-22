@@ -9,3 +9,4 @@ dotfile_backups/
 .Trash/
 .lesshst
 .local/
+.ssh/config
