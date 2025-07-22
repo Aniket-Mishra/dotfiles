@@ -3,4 +3,4 @@
 	email = anmishraofficial@gmail.com
 
 [includeIf "gitdir:/Users/aniket/TU_Eindhoven/"]
-    path = /Users/aniket/TU_Eindhoven/.gitconfig_tue
+    path = /Users/aniket/github/dotfiles/gitconfig_tue/gitconfig_tue

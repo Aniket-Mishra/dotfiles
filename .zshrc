@@ -79,6 +79,18 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ### Aliases
-alias ls="eza --long --header --git --icons"
+alias ls="eza --long --git --icons --group-directories-first --classify --header"
+alias cat="bat"
+alias nano="micro"
+alias grep="rg"
+alias find="fd"
+alias fm="ranger"
 # alias cd="z"
 eval "$(zoxide init --cmd cd zsh)"
+
+### Commands
+if command -v axel &> /dev/null; then
+  alias fastget='axel -n 8'
+else
+  alias fastget='curl -O'
+fi
