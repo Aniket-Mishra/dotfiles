@@ -1,0 +1,15 @@
+{
+  "displayMode": "minimal",
+  "logo": {
+    "type": "none"
+  },
+  "bar": {
+    "enabled": true
+  },
+  "modules": [
+    { "type": "cpu" },
+    { "type": "gpu" },
+    { "type": "memory" },
+    { "type": "disk", "options": { "folders": "/" } }
+  ]
+}

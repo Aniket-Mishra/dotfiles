@@ -70,17 +70,18 @@ eval "$(direnv hook zsh)"
 # Zoxide for smart directories (placed after compinit as it modifies environment)
 eval "$(zoxide init zsh)"
 
-# Setting up from brew
-# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+### Run fastfetch on terminal startup
+# if [[ $- == *i* ]] && command -v fastfetch &>/dev/null; then
+#   fastfetch --config ~/github/dotfiles/fastfetch/config.jsonc
+# fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ### Aliases
 alias ls="eza --long --git --icons --group-directories-first --classify --header"
-alias cat="bat"
+alias cat="bat --paging=never"
 alias nano="micro"
 alias grep="rg"
 alias find="fd"
