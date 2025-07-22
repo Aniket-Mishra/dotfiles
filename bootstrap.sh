@@ -11,7 +11,7 @@ esac
 echo "Running setup on $OS"
 
 if ! command -v brew &> /dev/null; then
-  echo "Installing Homebrew..."
+  echo "Installing Homebrew."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   echo "Homebrew present"
@@ -23,9 +23,9 @@ if [ -f ~/github/dotfiles/scripts/install_brew_packages.sh ]; then
 else
   echo "No install_brew_packages.sh found, skipping brew package install."
 fi
-echo "Setting up dotfile symlinks"
+echo "Setting up dotfile symlinks."
 
-echo "Backing up existing dotfiles"
+echo "Backing up existing dotfiles."
 mkdir -p ~/dotfile_backups
 for file in .zshrc .p10k.zsh .zprofile .gitconfig; do
   [ -f ~/$file ] && cp ~/$file ~/dotfile_backups/${file}_$(date +%s)
@@ -45,7 +45,7 @@ if [ -f ~/github/dotfiles/secrets/ssh_config.gpg ]; then
   gpg --quiet --output ~/.ssh/config --decrypt ~/github/dotfiles/secrets/ssh_config.gpg
   chmod 600 ~/.ssh/config
 else
-  echo "ℹNo encrypted SSH config found. Skipping."
+  echo "No encrypted SSH config found. Skipping."
 fi
 
 echo "Done BOIII"

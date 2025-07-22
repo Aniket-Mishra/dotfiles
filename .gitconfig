@@ -4,3 +4,7 @@
 
 [includeIf "gitdir:/Users/aniket/TU_Eindhoven/"]
     path = /Users/aniket/github/dotfiles/gitconfig_tue/gitconfig_tue
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[interactive]
+	diffFilter = diff-so-fancy --patch

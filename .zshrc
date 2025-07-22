@@ -102,3 +102,9 @@ brew-sync() {
   brew list --cask >> ~/github/dotfiles/brew-packages.txt
   echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
 }
+
+### Environment commands
+### UV env activation
+alias act_ml="source ~/Environments/env_ml/bin/activate"
+alias act_common="source ~/Environments/env_common/bin/activate"
+alias act_misc="source ~/Environments/env_misc/bin/activate"
