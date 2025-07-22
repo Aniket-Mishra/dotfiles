@@ -9,10 +9,8 @@ dotfile_backups/
 .Trash/
 .lesshst
 .local/
-.ssh/config
 .secrets
 *.key
 *.pem
 *.env
-.ssh/
 .aws/
