@@ -1,0 +1,11 @@
+# Private or volatile files
+dotfile_backups/
+.zsh_history
+.zsh_sessions
+.zcompdump*
+.ssh/
+.DS_Store
+.cache/
+.Trash/
+.lesshst
+.local/

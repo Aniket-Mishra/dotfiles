@@ -1,0 +1,6 @@
+[user]
+	name = Aniket-Mishra
+	email = anmishraofficial@gmail.com
+
+[includeIf "gitdir:/Users/aniket/TU_Eindhoven/"]
+    path = /Users/aniket/TU_Eindhoven/.gitconfig_tue
