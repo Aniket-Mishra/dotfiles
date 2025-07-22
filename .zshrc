@@ -95,4 +95,10 @@ else
   alias fastget='curl -O'
 fi
 
-alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
+# alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
+brew-sync() {
+  echo "Syncing Homebrew packages to dotfiles"
+  brew list > ~/github/dotfiles/brew-packages.txt
+  brew list --cask >> ~/github/dotfiles/brew-packages.txt
+  echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
+}

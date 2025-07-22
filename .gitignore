@@ -10,3 +10,9 @@ dotfile_backups/
 .lesshst
 .local/
 .ssh/config
+.secrets
+*.key
+*.pem
+*.env
+.ssh/
+.aws/
