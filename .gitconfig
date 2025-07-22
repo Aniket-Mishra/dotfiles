@@ -8,3 +8,11 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [interactive]
 	diffFilter = diff-so-fancy --patch
+[color]
+	ui = true
+[color "diff"]
+	highlightOld = red bold
+	highlightNew = green bold
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
