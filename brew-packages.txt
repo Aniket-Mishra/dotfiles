@@ -13,7 +13,9 @@ coreutils
 dav1d
 diff-so-fancy
 direnv
+dua-cli
 eza
+fastfetch
 fd
 ffmpeg
 flac
@@ -22,6 +24,8 @@ freetype
 frei0r
 fribidi
 fzf
+gd
+gdk-pixbuf
 gettext
 giflib
 git
@@ -30,12 +34,14 @@ gmp
 gnupg
 gnutls
 graphite2
+graphviz
+gts
 harfbuzz
-helix
 highway
 htop
 icu4c@77
 imath
+jasper
 jpeg-turbo
 jpeg-xl
 lame
@@ -43,6 +49,7 @@ leptonica
 libarchive
 libass
 libassuan
+libavif
 libb2
 libbluray
 libdeflate
@@ -57,6 +64,7 @@ libnghttp2
 libogg
 libpng
 librist
+librsvg
 libsamplerate
 libsndfile
 libsodium
@@ -65,6 +73,7 @@ libssh
 libssh2
 libtasn1
 libtiff
+libtool
 libunibreak
 libunistring
 libusb
@@ -82,13 +91,16 @@ libzip
 little-cms2
 lz4
 lzo
+m4
 mbedtls
 micro
 mpdecimal
 mpg123
 ncurses
+netpbm
 nettle
 npth
+ollama
 oniguruma
 opencore-amr
 openexr

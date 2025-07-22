@@ -96,6 +96,8 @@ else
   alias fastget='curl -O'
 fi
 
+### Functions
+
 # alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
 brew-sync() {
   echo "Syncing Homebrew packages to dotfiles"
@@ -104,8 +106,39 @@ brew-sync() {
   echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
 }
 
+# Create Environments
+make-py-env() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: mkvenv <env_base_name> <python_version (e.g. 3.12.10)>"
+        return 1
+    fi
+
+    local name=$1
+    local version=$2
+    local env_name="${name}_${version//./_}"
+    local env_path="$HOME/Environments/$env_name"
+    local req_path="$HOME/github/dotfiles/requirements/requirements_${env_name}.txt"
+    [[ ! -f "$req_path" ]] && req_path="$HOME/github/dotfiles/requirements/requirements_fallback.txt"
+
+    echo "Creating environment: $env_name"
+    uv venv "$env_path" --python "$version"
+
+    echo "Created at: $env_path"
+    echo "Installing requirements from: $req_path"
+
+    if [[ -f "$req_path" ]]; then
+        source "$env_path/bin/activate"
+        uv pip install -r "$req_path"
+        echo "Done setting up $env_name"
+    else
+        echo "Requirements file not found: $req_path"
+    fi
+}
+
+
+
 ### Environment commands
 ### UV env activation
 alias act_ml="source ~/Environments/env_ml/bin/activate"
 alias act_common="source ~/Environments/env_common/bin/activate"
-alias act_misc="source ~/Environments/env_misc/bin/activate"
+# alias act_misc="source ~/Environments/env_misc/bin/activate"

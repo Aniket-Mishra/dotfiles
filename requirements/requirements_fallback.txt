@@ -1,0 +1,36 @@
+# Core
+scipy
+numpy
+pandas
+polars
+pyspark
+
+# Basic Visualization
+matplotlib
+seaborn
+plotly
+dash
+streamlit
+
+# Machine Learning
+scikit-learn
+
+# Utility
+tqdm
+pydantic
+python-dotenv
+rich
+loguru
+
+# Notebooks
+notebook
+jupyterlab
+ipython
+
+# Typing
+annotated-types
+
+# Packaging / Testing
+pytest
+setuptools
+build

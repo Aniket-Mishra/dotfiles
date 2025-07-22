@@ -1,0 +1,103 @@
+# Utilities
+pyct
+pydantic
+wheel
+tqdm
+python-dotenv
+rich
+loguru
+typer
+hydra-core
+llvmlite>=0.44.0
+
+# Core Data Science
+pandas
+polars
+pyspark
+numpy
+numba>=0.58.0
+scikit-learn
+scikit-image
+statsmodels
+category-encoders
+imbalanced-learn
+fancyimpute
+xgboost
+lightgbm
+catboost
+
+# Deep Learning
+torch
+torchvision
+torchinfo
+
+# NLP
+nltk
+spacy
+transformers
+langchain
+langgraph
+sentence-transformers
+
+# Visualization
+matplotlib
+seaborn
+plotly
+dash
+bokeh
+panel
+graphviz
+networkx
+shap
+lime
+datashader
+
+# Image Processing
+opencv-python
+Pillow
+
+# Data Formats & I/O
+pyarrow
+fireducks
+toml
+pytz
+duckdb
+joblib
+
+# Web / Scraping / HTML
+beautifulsoup4
+jinja2
+annotated-types
+
+# Jupyter Ecosystem
+jupyterlab
+jupyterlab-widgets
+jupyter-console
+jupyter-core
+jupyter-server
+notebook
+ipython
+ipywidgets
+
+# Experiment Tracking and Tuning
+mlflow
+optuna
+
+# Vector Search / RAG
+chromadb
+faiss-cpu
+llama-index
+
+# PDF / Text Parsing
+pdfplumber
+pymupdf
+unstructured
+
+# Testing / Packaging
+pytest
+setuptools
+build
+twine
+
+# Development
+dvc
