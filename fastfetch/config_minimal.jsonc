@@ -7,12 +7,9 @@
     "enabled": true
   },
   "modules": [
-    { "type": "os" },
     { "type": "cpu" },
     { "type": "gpu" },
     { "type": "memory" },
-    { "type": "disk", "options": { "folders": "/" } },
-    { "type": "uptime" },
-    { "type": "shell" }
+    { "type": "disk", "options": { "folders": "/" } }
   ]
 }
