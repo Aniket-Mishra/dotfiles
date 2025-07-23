@@ -139,6 +139,6 @@ make-py-env() {
 
 ### Environment commands
 ### UV env activation
-alias act_ml="source ~/Environments/env_ml/bin/activate"
-alias act_common="source ~/Environments/env_common/bin/activate"
+alias act_ml="source ~/Environments/env_ml_3_12_10/bin/activate"
+alias act_common="source ~/Environments/env_common_3_12_10/bin/activate"
 # alias act_misc="source ~/Environments/env_misc/bin/activate"
