@@ -28,11 +28,11 @@ zinit light zsh-users/zsh-autosuggestions
 # zinit ice --as=plugin --wait
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-# Zsh history search (your choice)
+# Zsh history search
 zinit ice wait'1' lucid
 zinit light zsh-users/zsh-history-substring-search
 
-# General Zsh completions (essential for compinit)
+# General Zsh completions
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
@@ -40,17 +40,17 @@ zinit light zsh-users/zsh-completions
 zinit ice from"gh-r" as"program" wait'1' lucid
 zinit load junegunn/fzf
 
-# fzf-tab (complements fzf, can be turboed)
+# fzf-tab
 # zinit ice wait lucid
 zinit ice wait'1' lucid
 zinit load Aloxaf/fzf-tab
 
-# Snippet (placed here with other Zinit loads)
+# Snippet
 zinit ice wait'1' lucid
 zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
 
 
-# Deferred/Lazy loaded plugins (e.g., asdf)
+# Deferred/Lazy loaded plugins
 zinit ice --as=program --defer lucid
 zinit light asdf-vm/asdf
 
