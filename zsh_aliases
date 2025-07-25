@@ -1,0 +1,11 @@
+alias ls="eza --long --git --icons --group-directories-first --classify --header"
+alias cat="bat --paging=never"
+alias nano="micro"
+alias grep="rg"
+alias find="fd"
+alias fm="ranger"
+# alias cd="z"
+
+# Redundant but faster since I use these 2 a lot
+alias act_ml="source ~/Environments/env_ml_3_12_10/bin/activate"
+alias act_common="source ~/Environments/env_common_3_12_10/bin/activate"

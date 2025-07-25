@@ -1,0 +1,88 @@
+### Functions
+
+# alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
+brew-sync() {
+  echo "Syncing Homebrew packages to dotfiles"
+  brew list > ~/github/dotfiles/brew-packages.txt
+  brew list --cask >> ~/github/dotfiles/brew-packages.txt
+  echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
+}
+
+# Create Environments
+make-py-env() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: mkvenv <env_base_name> <python_version (e.g. 3.12.10)>"
+        return 1
+    fi
+
+    local name=$1
+    local version=$2
+    local env_name="${name}_${version//./_}"
+    local env_path="$HOME/Environments/$env_name"
+    local req_path="$HOME/github/dotfiles/requirements/requirements_${env_name}.txt"
+    [[ ! -f "$req_path" ]] && req_path="$HOME/github/dotfiles/requirements/requirements_fallback.txt"
+
+    echo "Creating environment: $env_name"
+    uv venv "$env_path" --python "$version"
+
+    echo "Created at: $env_path"
+    echo "Installing requirements from: $req_path"
+
+    if [[ -f "$req_path" ]]; then
+        source "$env_path/bin/activate"
+        uv pip install -r "$req_path"
+        echo "Done setting up $env_name"
+    else
+        echo "Requirements file not found: $req_path"
+    fi
+}
+
+activate_env() {
+    echo "Looking for Python environments only in ~/Environments/"
+    if [[ -z "$1" ]]; then
+        echo "Usage: activate_env <env_name>"
+        return 1
+    fi
+    local env_path="$HOME/Environments/$1/bin/activate"
+    if [[ -f "$env_path" ]]; then
+        source "$env_path"
+        echo "Activated environment: $1"
+    else
+        echo "Error: No environment found at $env_path"
+        return 2
+    fi
+}
+
+extract() {
+    if [[ -f "$1" ]]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"    ;;
+            *.tar.gz)    tar xzf "$1"    ;;
+            *.bz2)       bunzip2 "$1"    ;;
+            *.rar)       unrar x "$1"    ;;
+            *.gz)        gunzip "$1"     ;;
+            *.tar)       tar xf "$1"     ;;
+            *.tbz2)      tar xjf "$1"    ;;
+            *.tgz)       tar xzf "$1"    ;;
+            *.zip)       unzip "$1"      ;;
+            *.Z)         uncompress "$1" ;;
+            *.7z)        7z x "$1"       ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+clean_dsstore() {
+    find . -name '.DS_Store' -type f -delete
+    echo "deleted all .DS_Store files."
+}
+
+myip() {
+    curl -s https://ifconfig.me || curl -s https://ipinfo.io/ip
+}

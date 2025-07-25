@@ -22,43 +22,49 @@ autoload -Uz _zinit
 ### Zinit Plugins
 
 # Essential interactive plugins (load early, but wait for prompt)
-zinit ice --as=plugin --wait
+# zinit ice --as=plugin --wait
 zinit light zsh-users/zsh-autosuggestions
 
-zinit ice --as=plugin --wait
+# zinit ice --as=plugin --wait
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # Zsh history search (your choice)
-zinit ice --as=plugin --wait
+zinit ice wait'1' lucid
 zinit light zsh-users/zsh-history-substring-search
 
 # General Zsh completions (essential for compinit)
-zinit ice --as=plugin --wait
+zinit ice blockf
 zinit light zsh-users/zsh-completions
 
 # fzf setup (must be before compinit as it provides completions)
-zinit ice from"gh-r" as"program"
+zinit ice from"gh-r" as"program" wait'1' lucid
 zinit load junegunn/fzf
-zinit ice wait lucid
+
+# fzf-tab (complements fzf, can be turboed)
+# zinit ice wait lucid
+zinit ice wait'1' lucid
 zinit load Aloxaf/fzf-tab
 
 # Snippet (placed here with other Zinit loads)
+zinit ice wait'1' lucid
 zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
 
+
 # Deferred/Lazy loaded plugins (e.g., asdf)
-zinit ice --as=program --defer
+zinit ice --as=program --defer lucid
 zinit light asdf-vm/asdf
 
 
-# # Setting up from brew
-# # Theme - Powerlevel10k. It is no longer maintained
-# # But it's p good rn. If things go bad we search for sth else.
+### Setting up from brew
+### Theme - Powerlevel10k. It is no longer maintained
+### But it's p good rn. If things go bad we search for sth else.
 # zinit ice depth=1;
 # zinit light romkatv/powerlevel10k
 
 # Zsh completion initialization (moved after all completion-providing plugins and external completion setups)
 autoload -Uz compinit
-compinit -C
+# compinit -C # supresses sec warnings
+compinit -d ~/.zcompdump-$ZSH_VERSION
 
 # UV (Python manager) - Shell completion setup (placed before compinit)
 eval "$(uv generate-shell-completion zsh)"
@@ -80,13 +86,8 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ### Aliases
-alias ls="eza --long --git --icons --group-directories-first --classify --header"
-alias cat="bat --paging=never"
-alias nano="micro"
-alias grep="rg"
-alias find="fd"
-alias fm="ranger"
-# alias cd="z"
+[[ -f ~/github/dotfiles/zsh_aliases ]] && source ~/github/dotfiles/zsh_aliases
+
 eval "$(zoxide init --cmd cd zsh)"
 
 ### Commands
@@ -98,47 +99,5 @@ fi
 
 ### Functions
 
-# alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
-brew-sync() {
-  echo "Syncing Homebrew packages to dotfiles"
-  brew list > ~/github/dotfiles/brew-packages.txt
-  brew list --cask >> ~/github/dotfiles/brew-packages.txt
-  echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
-}
-
-# Create Environments
-make-py-env() {
-    if [[ $# -ne 2 ]]; then
-        echo "Usage: mkvenv <env_base_name> <python_version (e.g. 3.12.10)>"
-        return 1
-    fi
-
-    local name=$1
-    local version=$2
-    local env_name="${name}_${version//./_}"
-    local env_path="$HOME/Environments/$env_name"
-    local req_path="$HOME/github/dotfiles/requirements/requirements_${env_name}.txt"
-    [[ ! -f "$req_path" ]] && req_path="$HOME/github/dotfiles/requirements/requirements_fallback.txt"
-
-    echo "Creating environment: $env_name"
-    uv venv "$env_path" --python "$version"
-
-    echo "Created at: $env_path"
-    echo "Installing requirements from: $req_path"
-
-    if [[ -f "$req_path" ]]; then
-        source "$env_path/bin/activate"
-        uv pip install -r "$req_path"
-        echo "Done setting up $env_name"
-    else
-        echo "Requirements file not found: $req_path"
-    fi
-}
-
-
-
-### Environment commands
-### UV env activation
-alias act_ml="source ~/Environments/env_ml_3_12_10/bin/activate"
-alias act_common="source ~/Environments/env_common_3_12_10/bin/activate"
-# alias act_misc="source ~/Environments/env_misc/bin/activate"
+## alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
+[[ -f ~/github/dotfiles/shell_functions ]] && source ~/github/dotfiles/shell_functions
