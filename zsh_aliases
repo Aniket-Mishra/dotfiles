@@ -1,4 +1,4 @@
-alias ls="eza --long --git --icons --group-directories-first --color=auto --classify --header"
+#alias ls="eza --long --git --icons --group-directories-first --color=auto --classify --header"
 alias cat="bat --paging=never"
 alias nano="micro"
 alias grep="rg"

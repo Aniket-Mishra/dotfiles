@@ -1,11 +1,22 @@
 ### Functions
+unalias ls 2>/dev/null
+unalias -m 'ls*' 2>/dev/null
+unfunction ls 2>/dev/null
+ls() { 
+	local cleaned=()
+	for a in "$@"; do
+	    [[ "$a" == "-G" ]] && continue        # ignore macOS alias flag
+	    cleaned+=("$a")
+	  done
+	command eza --long --git --icons --group-directories-first --color=auto --classify --header "$@";
+}
 
 # alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
 brew-sync() {
-  echo "Syncing Homebrew packages to dotfiles"
-  brew list > ~/github/dotfiles/brew-packages.txt
-  brew list --cask >> ~/github/dotfiles/brew-packages.txt
-  echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
+	 echo "Syncing Homebrew packages to dotfiles"
+	 brew list > ~/github/dotfiles/brew-packages.txt
+	 brew list --cask >> ~/github/dotfiles/brew-packages.txt
+	 echo "Brew packages saved to ~/github/dotfiles/brew-packages.txt"
 }
 
 # Create Environments
