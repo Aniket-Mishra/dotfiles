@@ -79,7 +79,8 @@ mkcd() {
 }
 
 clean_dsstore() {
-    find . -name '.DS_Store' -type f -delete
+    # find . -name '.DS_Store' -type f -delete
+	fd '.DS_Store' -t f -x rm
     echo "deleted all .DS_Store files."
 }
 

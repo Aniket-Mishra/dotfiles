@@ -29,6 +29,7 @@ gdk-pixbuf
 gettext
 giflib
 git
+git-lfs
 glib
 gmp
 gnupg
@@ -146,8 +147,10 @@ zoxide
 zstd
 aldente
 alt-tab
+betterdisplay
 docker-desktop
 epic-games
+iina
 microsoft-auto-update
 microsoft-teams
 obsidian
@@ -158,8 +161,10 @@ visual-studio-code
 warp
 aldente
 alt-tab
+betterdisplay
 docker-desktop
 epic-games
+iina
 microsoft-auto-update
 microsoft-teams
 obsidian
