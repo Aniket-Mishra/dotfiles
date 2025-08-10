@@ -84,6 +84,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ### Aliases
+unalias ls 2>/dev/null
 [[ -f ~/github/dotfiles/zsh_aliases ]] && source ~/github/dotfiles/zsh_aliases
 
 eval "$(zoxide init --cmd cd zsh)"
