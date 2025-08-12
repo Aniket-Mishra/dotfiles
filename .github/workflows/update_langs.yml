@@ -2,11 +2,11 @@ name: Update Languages Table
 
 on:
   schedule:
-    - cron: "0 6 * * 1"   # Every Monday 06:00 UTC
-  workflow_dispatch:      # Manual trigger
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 permissions:
-  contents: write         # Needed to push README changes
+  contents: write
 
 jobs:
   update-langs:
@@ -28,7 +28,7 @@ jobs:
           README_PATH: ${{ github.workspace }}/README.md
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cargo run --release --manifest-path rust-tools/update_langs/Cargo.toml
+          cargo run --release --manifest-path rust_tools/update_langs/Cargo.toml
 
       - name: Commit changes (if any)
         run: |
