@@ -48,7 +48,7 @@ make-py-env() {
     fi
 }
 
-activate_env() {
+activate-env() {
     echo "Looking for Python environments only in ~/Environments/"
     if [[ -z "$1" ]]; then
         echo "Usage: activate_env <env_name>"
@@ -89,7 +89,7 @@ mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
-clean_dsstore() {
+clean-dsstore() {
     # find . -name '.DS_Store' -type f -delete
 	fd '.DS_Store' -t f -x rm
     echo "deleted all .DS_Store files."
