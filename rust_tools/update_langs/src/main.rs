@@ -1,89 +1,86 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{anyhow, bail, Context, Result};
 use reqwest::blocking::Client;
 use reqwest::header::{ACCEPT, AUTHORIZATION, USER_AGENT};
-use serde_json::Value;
-use std::{env, fs, path::Path};
+use std::{collections::HashMap, env, fs};
+
+const START: &str = "<!-- LANG_TABLE_START -->";
+const END: &str = "<!-- LANG_TABLE_END -->";
 
 fn main() -> Result<()> {
     let repo = env::var("REPO").unwrap_or_else(|_| "Aniket-Mishra/dotfiles".to_string());
     let readme_path = env::var("README_PATH").unwrap_or_else(|_| "README.md".to_string());
-    let start_marker = "<!-- LANG_TABLE_START -->";
-    let end_marker = "<!-- LANG_TABLE_END -->";
-    let token = env::var("GITHUB_TOKEN").ok(); // optional, but raises rate limits
-    let client = Client::builder().build()?;
-    let url = format!("https://api.github.com/repos/{}/languages", repo);
+    let token = env::var("GITHUB_TOKEN").ok();
+
+    let url = format!("https://api.github.com/repos/{repo}/languages");
+    let client = Client::new();
     let mut req = client
         .get(&url)
         .header(ACCEPT, "application/vnd.github.v3+json")
         .header(USER_AGENT, "update-langs-script");
 
     if let Some(t) = &token {
-        req = req.header(AUTHORIZATION, format!("Bearer {}", t));
+        req = req.header(AUTHORIZATION, format!("Bearer {t}"));
     }
 
-    let json: Value = req.send()?.error_for_status()?.json()?;
-    let obj = json
-        .as_object()
-        .context("Unexpected response: expected object of {language: bytes}")?;
+    let resp = req
+        .send()
+        .with_context(|| format!("request failed: {url}"))?;
+    let status = resp.status();
 
-    if obj.is_empty() {
-        bail!("No language data returned for repo {}", repo);
+    if !status.is_success() {
+        let body = resp.text().unwrap_or_default();
+        return Err(anyhow!("github api error {status}: {body}"));
     }
 
-    let total: f64 = obj.values().filter_map(|v| v.as_f64()).sum();
-    let mut items: Vec<(String, f64)> = obj
-        .iter()
-        .filter_map(|(k, v)| v.as_f64().map(|n| (k.clone(), n)))
-        .collect();
+    let mut items: Vec<(String, u64)> = resp.json::<HashMap<String, u64>>()?.into_iter().collect();
 
-    items.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
-
-    let mut table = String::from("| Language | % |\n|----------|---|\n");
-    for (lang, bytes) in items {
-        let perc = if total > 0.0 {
-            (bytes / total) * 100.0
-        } else {
-            0.0
-        };
-        table.push_str(&format!("| {} | {:.2}% |\n", lang, perc));
+    if items.is_empty() {
+        bail!("no language data returned for repo {repo}");
     }
 
-    let readme_contents = fs::read_to_string(&readme_path)
-        .with_context(|| format!("Failed to read {}", readme_path))?;
+    items.sort_by(|a, b| b.1.cmp(&a.1));
+    let total: f64 = items.iter().map(|(_, n)| *n as f64).sum();
 
-    let (start_idx, end_idx) = match (
-        readme_contents.find(start_marker),
-        readme_contents.find(end_marker),
-    ) {
+    let header = "| Language | % |\n|----------|---|\n";
+    let body = items
+        .into_iter()
+        .map(|(k, v)| {
+            let p = if total > 0.0 {
+                (v as f64 / total) * 100.0
+            } else {
+                0.0
+            };
+            format!("| {k} | {:.2}% |\n", p)
+        })
+        .collect::<String>();
+    let table = format!("{header}{body}");
+
+    let readme = fs::read_to_string(&readme_path)
+        .with_context(|| format!("failed to read {readme_path}"))?;
+
+    let (s, e) = match (readme.find(START), readme.find(END)) {
         (Some(s), Some(e)) if e > s => (s, e),
-        _ => {
-            // Markers missing: append a new section to the bottom
-            let appended = format!(
-                "{}\n\n## Languages\n\n{}\n{}\n{}\n",
-                readme_contents, start_marker, table, end_marker
-            );
-            fs::write(&readme_path, appended)
-                .with_context(|| format!("Failed to write {}", readme_path))?;
-            println!("✅ Added languages section to {}", readme_path);
+        (None, _) => {
+            let updated = format!("{readme}\n\n## Languages\n\n{START}\n{table}\n{END}\n");
+            fs::write(&readme_path, updated)
+                .with_context(|| format!("failed to write {readme_path}"))?;
+            println!("added languages section to {readme_path}");
             return Ok(());
         }
+        (Some(_), None) => bail!("found start marker but not end marker"),
+        (Some(s), Some(e)) if e <= s => bail!("end marker appears before start marker"),
+        _ => unreachable!(),
     };
 
-    let before = &readme_contents[..start_idx + start_marker.len()];
-    let after = &readme_contents[end_idx..];
-    let new_contents = format!("{}\n{}\n{}", before, table, after);
+    let before = &readme[..s + START.len()];
+    let after = &readme[e..];
+    let new = format!("{before}\n{table}\n{after}");
 
-    if new_contents != readme_contents {
-        if let Some(parent) = Path::new(&readme_path).parent() {
-            if !parent.as_os_str().is_empty() {
-                fs::create_dir_all(parent).ok();
-            }
-        }
-        fs::write(&readme_path, new_contents)
-            .with_context(|| format!("Failed to write {}", readme_path))?;
-        println!("✅ Updated languages table in {}", readme_path);
+    if new != readme {
+        fs::write(&readme_path, new).with_context(|| format!("failed to write {readme_path}"))?;
+        println!("updated languages table in {readme_path}");
     } else {
-        println!("ℹ️ No changes to {}", readme_path);
+        println!("no changes to {readme_path}");
     }
 
     Ok(())
