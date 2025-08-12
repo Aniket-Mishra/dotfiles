@@ -1,6 +1,7 @@
 # Private or volatile files
 dotfile_backups/
-rust_tools/download_organizer/target/
+**/target/
+**/*.rs.bk
 .zsh_history
 .zsh_sessions
 .zcompdump*
