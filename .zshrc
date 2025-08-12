@@ -86,7 +86,8 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 ### Aliases
 unalias ls 2>/dev/null
 unalias -m 'ls*' 2>/dev/null
-[[ -f ~/github/dotfiles/zsh_aliases ]] && source ~/github/dotfiles/zsh_aliases
+[[ -r ~/.zsh_aliases   ]] && source ~/.zsh_aliases
+[[ -r ~/.zsh_functions ]] && source ~/.zsh_functions
 
 eval "$(zoxide init --cmd cd zsh)"
 
@@ -100,4 +101,4 @@ fi
 ### Functions
 
 ## alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
-[[ -f ~/github/dotfiles/shell_functions ]] && source ~/github/dotfiles/shell_functions
+[[ -r ~/.zsh_functions ]] && source ~/.zsh_functions
