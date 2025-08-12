@@ -1,26 +1,30 @@
 # dotfiles
 
+![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
+
+![Top Lang](https://img.shields.io/github/languages/top/Aniket-Mishra/dotfiles?color=ff8a65&label=Top%20Language&style=for-the-badge)
+![Lang Count](https://img.shields.io/github/languages/count/Aniket-Mishra/dotfiles?color=80deea&label=Languages&style=for-the-badge)
+
 A portable, battle (shell) tested toolkit for setting up macOS and Linux exactly the way I like it.  
-Set up a a fresh machine or your current one to a tuned, hyper-productive (YES) environment in one go.
+Set up a fresh machine or your current one to a tuned, hyper-productive (YES) environment in one go.
 
 ### What's in it, and why?
 - Zsh (zinit) + Powerlevel10k.
     - ZComet is faster, but I like to manage my manager, which ICE allows me to do in Zinit.
 - Homebrew & packages
-    - This can be updated for linux systems if you don't use Mac. Windows can be left to dry.
+    - This can be updated for Linux systems if you don't use Mac. Windows can be left to dry.
 - Git setup (with TU/e override - cuz sikouriti)
     - Can be added for work profiles as well.
 - Encrypted SSH config - I've lost my keys far too many times
     - I hope it's safe. Else I'll remove it/add it to gitignore.
-- Misc configuration - tools like micro etc
-    - One day, I'll have enough time to permanently move to vim.
-- Contains code for QoL scripts, like Download organisers etc.
+- Misc configuration - tools like micro, etc
+    - One day, I'll have enough courage to move to Vim.
+- Contains code for QoL scripts, like Download organisers, etc.
     - Yes, I wrote that in Rust. Why? Idk, I hate myself or sth.
 
 
 Whether I’m on a new laptop, spinning up a VM, or just experimenting, these dotfiles keep my workflow consistent.
-
----
 
 ## Features
 
@@ -31,7 +35,9 @@ Whether I’m on a new laptop, spinning up a VM, or just experimenting, these do
 - **Rust utilities** — small CLI tools like an automated downloads organizer (cron-ready).
 - **Cross-platform** — works on macOS and Linux out of the box.
 
----
+## What it looks like:
+<img width="1352" height="508" alt="image" src="https://github.com/user-attachments/assets/b79ce6c9-4427-4dae-9b15-d089cd208c61" />
+
 
 ## Quick Start
 
