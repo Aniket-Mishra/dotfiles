@@ -3,8 +3,13 @@
 ![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
 
-![Top Lang](https://img.shields.io/github/languages/top/Aniket-Mishra/dotfiles?color=ff8a65&label=Top%20Language&style=for-the-badge)
-![Lang Count](https://img.shields.io/github/languages/count/Aniket-Mishra/dotfiles?color=80deea&label=Languages&style=for-the-badge)
+<!-- LANG_TABLE_START -->
+| Language | % |
+|----------|---|
+| Shell | 77.07% |
+| Rust | 22.93% |
+
+<!-- LANG_TABLE_END -->
 
 A portable, battle (shell) tested toolkit for setting up macOS and Linux exactly the way I like it.  
 Set up a fresh machine or your current one to a tuned, hyper-productive (YES) environment in one go.
