@@ -1,7 +1,7 @@
 # dotfiles
 
-![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=blue)
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=CE422B)
 
 <!-- LANG_TABLE_START -->
 | Language | % |
@@ -110,14 +110,3 @@ If you have a faster way, a cleaner config, or a clever automation, I’d love t
 License
 MIT License.
 Use, modify, and share freely. If you break your system, that's on you, I'm just a cat.
-
-
-## Languages
-
-<!-- LANG_TABLE_START -->
-| Language | % |
-|----------|---|
-| Shell | 76.18% |
-| Rust | 23.82% |
-
-<!-- LANG_TABLE_END -->
