@@ -89,10 +89,52 @@ mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
+# clean-dsstore() {
+#     # find . -name '.DS_Store' -type f -delete
+# 	fd '.DS_Store' -t f -x rm
+#     echo "deleted all .DS_Store files."
+# }
+
 clean-dsstore() {
-    # find . -name '.DS_Store' -type f -delete
-	fd '.DS_Store' -t f -x rm
-    echo "deleted all .DS_Store files."
+  # Usage:
+  #   clean-dsstore here # current dir + children
+  #   clean-dsstore user # home + children
+  #   clean-dsstore here/user --dry-run
+
+  local mode="here"
+  local dry=0
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      here|current) mode="here" ;;
+      user|home)    mode="user" ;;
+      --dry-run)    dry=1 ;;
+      -h|--help)    echo "Usage: clean-dsstore [here|user] [--dry-run]"; return 0 ;;
+      *)            echo "Usage: clean-dsstore [here|user] [--dry-run]"; return 2 ;;
+    esac
+    shift
+  done
+
+  local root
+  [[ "$mode" == "user" ]] && root="$HOME" || root="$PWD"
+
+  if command -v fd >/dev/null 2>&1; then
+    if (( dry )); then
+      fd -H -uu -t f -g ".DS_Store"   "$root"
+      fd -H -uu -t f -g "._.DS_Store" "$root"
+    else
+      fd -H -uu -t f -g ".DS_Store"   "$root" -X rm -f
+      fd -H -uu -t f -g "._.DS_Store" "$root" -X rm -f
+    fi
+  else
+    if (( dry )); then
+      find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -print
+    else
+      find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -delete
+    fi
+  fi
+
+  echo "Done: cleaned .DS_Store under $root${dry:+ (dry-run)}"
 }
 
 myip() {
