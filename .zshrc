@@ -102,3 +102,4 @@ fi
 
 ## alias brew-sync='brew list > ~/github/dotfiles/brew-packages.txt && brew list --cask >> ~/github/dotfiles/brew-packages.txt'
 [[ -r ~/.zsh_functions ]] && source ~/.zsh_functions
+export JAVA_HOME=$(/usr/libexec/java_home -v 21) # 24 is present but misbehaves with spark 4.0
