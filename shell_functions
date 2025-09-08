@@ -140,3 +140,14 @@ clean-dsstore() {
 myip() {
     curl -s https://ifconfig.me || curl -s https://ipinfo.io/ip
 }
+
+get-process-at-port() {
+  local port=$1
+  local kill=$2
+  echo "Process at port $1 is"
+  lsof -i :$1
+  if (( kill )); then
+    echo "Killing process at port $1"
+    kill "$(lsof -t -i :$1)"
+  fi
+}
