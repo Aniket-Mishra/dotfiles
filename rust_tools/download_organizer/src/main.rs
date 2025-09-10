@@ -7,9 +7,32 @@ fn main() -> io::Result<()> {
     let downloads = dirs::download_dir().expect("Could not find Downloads directory");
 
     let rules = vec![
-        (vec!["jpg", "png", "webp", "gif"], "images"),
-        (vec!["pdf", "docx", "txt", "xlsx"], "documents"),
+        (
+            vec![
+                "jpg", "png", "webp", "gif", "jpeg", "heic", "heif", "bmp", "tiff", "avif", "raw",
+                "svg", "eps", "ai",
+            ],
+            "images",
+        ),
+        (vec!["docx", "txt", "doc", "md", "tex"], "documents"),
+        (
+            vec![
+                "xlsx", "xls", "csv", "tsv", "parquet", "json", "feather", "sql",
+            ],
+            "data_files",
+        ),
+        (vec!["pdf"], "pdfs"),
+        (
+            vec!["sh", "rs", "c", "cpp", "py", "js", "html", "css"],
+            "scripts",
+        ),
         (vec!["dmg", "pkg", "app"], "apps"),
+        (
+            vec![
+                "tar.gz", "bz2", "rar", "gz", "tar", "tbz2", "tgz", "zip", "Z", "7z",
+            ],
+            "compressed",
+        ),
     ];
 
     // not recursive
