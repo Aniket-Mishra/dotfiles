@@ -17,4 +17,4 @@ alias gs="git status"
 alias gd="git diff"
 alias ga="git add"
 alias gc="git commit"
-alias ps="push" # to push I want extra safety, so git needs to be typed
+alias ps="git push"
