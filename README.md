@@ -6,8 +6,8 @@
 <!-- LANG_TABLE_START -->
 | Language | % |
 |----------|---|
-| Shell | 80.65% |
-| Rust | 19.35% |
+| Shell | 78.80% |
+| Rust | 21.20% |
 
 <!-- LANG_TABLE_END -->
 
