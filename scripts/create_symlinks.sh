@@ -14,6 +14,15 @@ echo "Setting up symlinks."
 [[ -f "${REPO_DIR}/.zprofile" ]] && link_to "${REPO_DIR}/.zprofile"  "${HOME}/.zprofile"
 [[ -f "${REPO_DIR}/.gitconfig" ]] && link_to "${REPO_DIR}/.gitconfig" "${HOME}/.gitconfig"
 
+if [[ -d "${REPO_DIR}/configs/git-templates" ]]; then
+  link_to "${REPO_DIR}/configs/git-templates" "${HOME}/.git-templates"
+  if command -v git >/dev/null 2>&1; then
+    current_tpl_dir="$(git config --global --get init.templateDir || true)"
+    if [[ "${current_tpl_dir:-}" != "${HOME}/.git-templates" ]]; then
+      git config --global init.templateDir "${HOME}/.git-templates"
+    fi
+  fi
+fi
 
 # can add more folders othre than fastfetch n micro.
 if [[ -d "${REPO_DIR}/.config" ]]; then

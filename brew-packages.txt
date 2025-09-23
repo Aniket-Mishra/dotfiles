@@ -131,6 +131,7 @@ tesseract
 theora
 tldr
 tmux
+tree
 unbound
 utf8proc
 uv
@@ -149,10 +150,12 @@ aldente
 alt-tab
 arc
 betterdisplay
+boring-notch
 docker-desktop
 epic-games
 iina
 jordanbaird-ice
+karabiner-elements
 microsoft-auto-update
 microsoft-teams
 obsidian
@@ -168,10 +171,12 @@ aldente
 alt-tab
 arc
 betterdisplay
+boring-notch
 docker-desktop
 epic-games
 iina
 jordanbaird-ice
+karabiner-elements
 microsoft-auto-update
 microsoft-teams
 obsidian
