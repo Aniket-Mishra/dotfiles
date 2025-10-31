@@ -95,47 +95,164 @@ mkcd() {
 #     echo "deleted all .DS_Store files."
 # }
 
-clean-dsstore() {
+# clean-dsstore() {
+#   # Usage:
+#   #   clean-dsstore here # current dir + children
+#   #   clean-dsstore user # home + children
+#   #   clean-dsstore here/user --dry-run
+
+#   local mode="here"
+#   local dry=0
+
+#   while [[ $# -gt 0 ]]; do
+#     case "$1" in
+#       here|current) mode="here" ;;
+#       user|home)    mode="user" ;;
+#       --dry-run)    dry=1 ;;
+#       -h|--help)    echo "Usage: clean-dsstore [here|user] [--dry-run]"; return 0 ;;
+#       *)            echo "Usage: clean-dsstore [here|user] [--dry-run]"; return 2 ;;
+#     esac
+#     shift
+#   done
+
+#   local root
+#   [[ "$mode" == "user" ]] && root="$HOME" || root="$PWD"
+
+#   if command -v fd >/dev/null 2>&1; then
+#     if (( dry )); then
+#       fd -H -uu -t f -g ".DS_Store"   "$root"
+#       fd -H -uu -t f -g "._.DS_Store" "$root"
+#     else
+#       fd -H -uu -t f -g ".DS_Store"   "$root" -X rm -f
+#       fd -H -uu -t f -g "._.DS_Store" "$root" -X rm -f
+#     fi
+#   else
+#     if (( dry )); then
+#       find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -print
+#     else
+#       find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -delete
+#     fi
+#   fi
+
+#   echo "Done: cleaned .DS_Store under $root${dry:+ (dry-run)}"
+# }
+
+clean-shop() {
   # Usage:
-  #   clean-dsstore here # current dir + children
-  #   clean-dsstore user # home + children
-  #   clean-dsstore here/user --dry-run
+  #   clean-shop .DS_Store [here|user] [-y|--yes] [--dry-run]
+  #   clean-shop __pycache__ [here] [-y|--yes] [--dry-run]
+
+  local target_name="$1"
+  shift 
 
   local mode="here"
+  local confirm=0
   local dry=0
+  local fd_type=""
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       here|current) mode="here" ;;
       user|home)    mode="user" ;;
+      -y|--yes)     confirm=1 ;;
       --dry-run)    dry=1 ;;
-      -h|--help)    echo "Usage: clean-dsstore [here|user] [--dry-run]"; return 0 ;;
-      *)            echo "Usage: clean-dsstore [here|user] [--dry-run]"; return 2 ;;
+      -h|--help)    echo "Usage: clean-shop <.DS_Store|__pycache__> [here|user] [-y|--yes] [--dry-run]"; return 0 ;;
+      *)            echo "Error: Unknown argument '$1'."; return 2 ;;
     esac
     shift
   done
 
+  case "$target_name" in
+    .DS_Store)
+      fd_type="-t f"
+      ;;
+    __pycache__)
+      fd_type="-t d"
+      if [[ "$mode" == "user" ]]; then
+        echo "ERROR: Deletion of '$target_name' from the entire system is too risky. I am not taking responsibility for it."
+        echo "Please use 'clean-shop $target_name here' to clean the current directory."
+        echo "To delete from the entire home directory, run this command in the terminal"
+        echo "sudo find ~ -type d -name '__pycache__' -exec rm -rf {} +"
+        echo "Good luck! You'll need it."
+        return 1
+      fi
+      ;;
+    *)
+      echo "Error: Invalid target name '$target_name'. Must be '.DS_Store' or '__pycache__'." # Can erxtend later
+      return 2
+      ;;
+  esac
+
   local root
   [[ "$mode" == "user" ]] && root="$HOME" || root="$PWD"
 
+  local search_paths
+  
+  echo "Lookin' for '$target_name' under $root"
+  
   if command -v fd >/dev/null 2>&1; then
-    if (( dry )); then
-      fd -H -uu -t f -g ".DS_Store"   "$root"
-      fd -H -uu -t f -g "._.DS_Store" "$root"
-    else
-      fd -H -uu -t f -g ".DS_Store"   "$root" -X rm -f
-      fd -H -uu -t f -g "._.DS_Store" "$root" -X rm -f
-    fi
+      if [[ "$target_name" == ".DS_Store" ]]; then
+          search_paths=$(fd -H -uu -t f -g ".DS_Store" "$root" && fd -H -uu -t f -g "._.DS_Store" "$root")
+      elif [[ "$target_name" == "__pycache__" ]]; then
+          search_paths=$(fd -H -uu -t d __pycache__ "$root")
+      fi
   else
-    if (( dry )); then
-      find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -print
-    else
-      find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -delete
+      if [[ "$target_name" == ".DS_Store" ]]; then
+          search_paths=$(find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -print)
+      elif [[ "$target_name" == "__pycache__" ]]; then
+          search_paths=$(find "$root" -type d -name '__pycache__' -print)
+      fi
+  fi
+  
+  if [[ -z "$search_paths" ]]; then
+      echo "No '$target_name' objects found to delete under $root."
+      return 0
+  fi
+  
+  # This is so much prettier. Will delete when I get bored.
+  echo ""
+  echo "The following $target_name objects will be deleted:"
+  echo "-----------------------------------------------------------------------"
+  echo "$search_paths"
+  echo "-----------------------------------------------------------------------"
+  echo ""
+
+  if (( dry )); then
+      local action="dry-run"
+  else
+      local action="deletion"
+      if (( ! confirm )); then
+          echo -n "Confirm $action of '$target_name' under '$root'? (y/N): "
+          read -r response
+          [[ "$response" != [yY] ]] && echo "Action cancelled." && return 0
+      fi
+  fi
+  
+  echo "Starting $action of '$target_name' under '$root'..."
+
+  if (( dry )); then
+    echo "$search_paths"
+  else
+    if [[ "$target_name" == ".DS_Store" ]]; then
+      if command -v fd >/dev/null 2>&1; then
+          fd -H -uu -t f -g ".DS_Store"   "$root" -X rm -f
+          fd -H -uu -t f -g "._.DS_Store" "$root" -X rm -f
+      else
+          find "$root" -type f \( -name '.DS_Store' -o -name '._.DS_Store' \) -delete
+      fi
+
+    elif [[ "$target_name" == "__pycache__" ]]; then
+      if command -v fd >/dev/null 2>&1; then
+          fd -H -uu -t d __pycache__ "$root" -X rm -rf {} +
+      else
+          find "$root" -type d -name '__pycache__' -exec rm -rf {} +
+      fi
     fi
   fi
 
-  echo "Done: cleaned .DS_Store under $root${dry:+ (dry-run)}"
+  echo "Done: processed '$target_name' under $root"
 }
+
 
 myip() {
     curl -s https://ifconfig.me || curl -s https://ipinfo.io/ip
