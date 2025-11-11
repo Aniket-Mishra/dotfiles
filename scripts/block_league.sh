@@ -17,7 +17,8 @@ DOMAINS=( # v2, update and add more if I find anything I am missing.
   download.riotgames.com downloads.riotcdn.net
   riotcdn.net assets.riotcdn.net
   static.riotgames.com content.riotgames.com
-  na.leagueoflegends.com euw.leagueoflegends.com eune.leagueoflegends.com pbe.leagueoflegends.com
+  na.leagueoflegends.com euw.leagueoflegends.com eune.leagueoflegends.com pbe.leagueoflegends.com update-account.riotgames.com
+  https://support-leagueoflegends.riotgames.com/
 )
 
 echo "Backup /etc/hosts -> $BACKUP - we want no issues later"
