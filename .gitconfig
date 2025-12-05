@@ -23,3 +23,5 @@
 	required = true
 [init]
 	templateDir = /Users/aniket/.git-templates
+[merge]
+	ff = false
