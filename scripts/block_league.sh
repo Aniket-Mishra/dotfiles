@@ -20,6 +20,8 @@ DOMAINS=( # v2, update and add more if I find anything I am missing.
   na.leagueoflegends.com euw.leagueoflegends.com eune.leagueoflegends.com pbe.leagueoflegends.com update-account.riotgames.com
   https://support-leagueoflegends.riotgames.com/
   riotgames.com www.riotgames.com
+  instagram.com www.instagram.com
+  cdninstagram.com
 
 )
 
