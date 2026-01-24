@@ -41,6 +41,7 @@ harfbuzz
 highway
 htop
 icu4c@77
+icu4c@78
 imath
 jasper
 jpeg-turbo
@@ -58,6 +59,7 @@ libevent
 libgcrypt
 libgit2
 libgpg-error
+libiconv
 libidn2
 libksba
 libmicrohttpd
@@ -75,6 +77,7 @@ libssh2
 libtasn1
 libtiff
 libtool
+libudfread
 libunibreak
 libunistring
 libusb
@@ -94,6 +97,7 @@ lz4
 lzo
 m4
 mbedtls
+mbedtls@3
 micro
 mpdecimal
 mpg123
@@ -106,6 +110,7 @@ oniguruma
 opencore-amr
 openexr
 openjpeg
+openjph
 openssl@3
 opus
 p11-kit
@@ -132,6 +137,7 @@ theora
 tldr
 tmux
 tree
+unar
 unbound
 utf8proc
 uv
@@ -142,6 +148,7 @@ x265
 xorgproto
 xvid
 xz
+yyjson
 zeromq
 zimg
 zoxide
