@@ -49,12 +49,19 @@ make-py-env() {
 }
 
 activate-env() {
-    echo "Looking for Python environments only in ~/Environments/"
     if [[ -z "$1" ]]; then
         echo "Usage: activate_env <env_name>"
         return 1
     fi
-    local env_path="$HOME/Environments/$1/bin/activate"
+
+    if [[ "$1" == "venv" ]]; then
+        echo "Looking for the .venv Python environment in CWD only"
+        local env_path="./.venv/bin/activate"
+    else 
+        echo "Looking for Python environments only in ~/Environments/"
+        local env_path="$HOME/Environments/$1/bin/activate"
+    fi
+
     if [[ -f "$env_path" ]]; then
         source "$env_path"
         echo "Activated environment: $1"
