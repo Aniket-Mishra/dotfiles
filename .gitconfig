@@ -25,3 +25,11 @@
 	templateDir = /Users/aniket/.git-templates
 [merge]
 	ff = false
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential]
+	helper = osxkeychain

@@ -30,21 +30,31 @@ make-py-env() {
     local version=$2
     local env_name="${name}_${version//./_}"
     local env_path="$HOME/Environments/$env_name"
-    local req_path="$HOME/github/dotfiles/requirements/requirements_${env_name}.txt"
-    [[ ! -f "$req_path" ]] && req_path="$HOME/github/dotfiles/requirements/requirements_fallback.txt"
 
     echo "Creating environment: $env_name"
     uv venv "$env_path" --python "$version"
 
     echo "Created at: $env_path"
-    echo "Installing requirements from: $req_path"
 
-    if [[ -f "$req_path" ]]; then
-        source "$env_path/bin/activate"
-        uv pip install -r "$req_path"
-        echo "Done setting up $env_name"
+    if [[ -f "pyproject.toml" ]]; then
+        echo "Local pyproject.toml, using it to create environment"
+        UV_PROJECT_ENVIRONMENT="$env_path" uv sync
+    elif [[ -f "requirements.txt" ]]; then
+        echo "Local requirements.txt, using it to create environment"
+        uv pip install -r requirements.txt --python "$env_path/bin/python"
     else
-        echo "Requirements file not found: $req_path"
+        local req_path="$HOME/github/dotfiles/requirements/requirements_${env_name}.txt"
+        [[ ! -f "$req_path" ]] && req_path="$HOME/github/dotfiles/requirements/requirements_fallback.txt"
+
+        echo "Installing requirements from: $req_path"
+
+        if [[ -f "$req_path" ]]; then
+            source "$env_path/bin/activate"
+            uv pip install -r "$req_path"
+            echo "Done setting up $env_name"
+        else
+            echo "Requirements file not found: $req_path"
+        fi
     fi
 }
 
